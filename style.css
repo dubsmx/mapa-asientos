@@ -74,40 +74,47 @@ h1 {
 }
 
 .fila {
-  display: flex;
+  display: grid;
+  grid-gap: 4px;
   align-items: center;
-  margin-bottom: 4px;
-  flex-wrap: wrap;
+  margin-bottom: 6px;
 }
 
 .etiqueta-fila {
-  width: 25px;
-  text-align: right;
-  margin-right: 6px;
+  grid-column: 1 / -1;
+  text-align: left;
   font-weight: bold;
+  margin-bottom: 2px;
 }
 
-/* Asientos con tamaño dinámico */
+/* Configuración de columnas según la cantidad */
+.fila[data-columnas="20"] {
+  grid-template-columns: repeat(20, 1fr);
+}
+.fila[data-columnas="30"] {
+  grid-template-columns: repeat(30, 1fr);
+}
+
+/* Asientos escalables */
 .asiento {
-  margin: 1px;
-  cursor: pointer;
+  width: 100%;
+  aspect-ratio: 1 / 1;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: clamp(6px, 2vw, 12px);
   border-radius: 3px;
-  font-size: clamp(8px, 1.5vw, 11px);
+  cursor: pointer;
 }
 
-/* Colores + tamaños base */
-.asiento.rosa { width: 24px; height: 24px; background: #ff44cd; }
-.asiento.amarillo { width: 24px; height: 24px; background: #fff941; }
-.asiento.naranja { width: 16px; height: 16px; background: #ff8b26; font-size: clamp(6px, 1vw, 9px); }
+.asiento.rosa { background: #ff44cd; }
+.asiento.amarillo { background: #fff941; color: #000; }
+.asiento.naranja { background: #ff8b26; }
 
-/* Estados seleccionados y reservados */
 .asiento.seleccionado { background: #4caf50 !important; }
 .asiento.reservado { background: #e53935 !important; cursor: not-allowed; }
 
-/* Responsivo */
+/* Responsivo móvil */
 @media (max-width: 600px) {
   h1 { font-size: 1.5rem; }
   .logo { width: 120px; }
@@ -115,6 +122,4 @@ h1 {
     font-size: 0.9rem;
     padding: 8px 12px;
   }
-  .asiento.rosa, .asiento.amarillo { width: 20px; height: 20px; }
-  .asiento.naranja { width: 14px; height: 14px; }
 }

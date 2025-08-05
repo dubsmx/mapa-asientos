@@ -24,10 +24,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function crearSeccion(contenedorId, columnas, claseColor) {
     const contenedor = document.getElementById(contenedorId);
-
     filas.forEach(fila => {
       const filaDiv = document.createElement("div");
       filaDiv.classList.add("fila");
+      filaDiv.dataset.columnas = columnas;
 
       const etiqueta = document.createElement("div");
       etiqueta.classList.add("etiqueta-fila");
@@ -57,7 +57,6 @@ document.addEventListener("DOMContentLoaded", () => {
   crearSeccion("zona-c", 20, "amarillo");
 
   const reservadosRef = ref(db, "reservados");
-
   onValue(reservadosRef, (snapshot) => {
     const reservados = snapshot.val() || [];
     document.querySelectorAll(".asiento").forEach(asiento => {
@@ -73,12 +72,10 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("reservar").addEventListener("click", async () => {
     const seleccionados = [...document.querySelectorAll(".asiento.seleccionado")];
     const nuevosReservados = seleccionados.map(a => a.dataset.nombre);
-
     const snapshot = await get(child(ref(db), "reservados"));
     const actuales = snapshot.exists() ? snapshot.val() : [];
     const actualizados = [...new Set([...actuales, ...nuevosReservados])];
     await set(ref(db, "reservados"), actualizados);
-
     seleccionados.forEach(a => a.classList.remove("seleccionado"));
     alert("Asientos reservados en la nube");
   });
