@@ -87,26 +87,23 @@ h1 {
   text-align: left;
 }
 
+/* Alineación perfecta usando grid */
 .fila {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
+  display: grid;
+  grid-template-columns: 30px repeat(var(--columnas), 28px);
   gap: 5px;
+  align-items: center;
   margin-bottom: 10px;
 }
 
 .etiqueta-fila {
-  width: 20px;
+  text-align: right;
   font-weight: bold;
   color: #ccc;
-  text-align: right;
-  margin-right: 8px;
 }
 
 .asientos-container {
-  display: flex;
-  gap: 5px;
-  flex-wrap: nowrap;
+  display: contents; /* permite a los asientos ocupar directamente la grilla */
 }
 
 .asiento {
@@ -119,6 +116,7 @@ h1 {
   border-radius: 4px;
   cursor: pointer;
   box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  margin: auto;
 }
 
 .asiento.rosa { background: #ff44cd; }
@@ -130,6 +128,7 @@ h1 {
 
 @media (max-width: 600px) {
   .mapa { max-width: 100%; }
+  .fila { grid-template-columns: 25px repeat(var(--columnas), 22px); }
   .asiento { width: 20px; height: 20px; font-size: 0.6rem; }
-  .etiqueta-fila { width: 16px; font-size: 0.7rem; }
+  .etiqueta-fila { font-size: 0.7rem; }
 }

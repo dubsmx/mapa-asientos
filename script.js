@@ -24,6 +24,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function crearSeccion(contenedorId, columnas, claseColor) {
     const contenedor = document.getElementById(contenedorId);
+    contenedor.style.setProperty('--columnas', columnas);
+
     filas.forEach(fila => {
       const filaDiv = document.createElement("div");
       filaDiv.classList.add("fila");
@@ -56,10 +58,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Crear las zonas
   crearSeccion("zona-a", 20, "rosa");
   crearSeccion("zona-b", 30, "naranja");
   crearSeccion("zona-c", 20, "amarillo");
 
+  // Sincronizar reservas con Firebase
   const reservadosRef = ref(db, "reservados");
   onValue(reservadosRef, (snapshot) => {
     const reservados = snapshot.val() || [];
