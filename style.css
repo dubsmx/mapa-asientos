@@ -1,0 +1,172 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #111;
+  color: white;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+h1 {
+  margin: 20px 0;
+}
+
+.acciones {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+#reservar {
+  padding: 10px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  background: #28a745;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}
+#reservar:hover {
+  background: #218838;
+}
+
+.wrapper {
+  width: 100%;
+  height: 80vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+  background: #222;
+}
+
+.mapa {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  align-items: center;
+  transform-origin: top center;
+}
+
+/* Cada zona de asientos */
+.seccion {
+  background: #222;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.seccion h2 {
+  margin-bottom: 20px;
+}
+
+/* Fila con etiqueta de letra */
+.fila {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.etiqueta-fila {
+  width: 30px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  margin-right: 5px;
+}
+
+/* Colores por zona */
+#zona-a .asiento {
+  background: pink;
+}
+#zona-a .asiento:hover {
+  background: hotpink;
+}
+
+#zona-b .asiento {
+  background: orange;
+}
+#zona-b .asiento:hover {
+  background: darkorange;
+}
+
+#zona-c .asiento {
+  background: yellow;
+}
+#zona-c .asiento:hover {
+  background: gold;
+}
+
+.asiento {
+  width: 30px;
+  height: 30px;
+  color: black;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 30px;
+  border-radius: 8px;
+  margin: 3px;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.asiento:hover {
+  transform: scale(1.2);
+}
+
+.asiento.seleccionado {
+  background: green !important;
+  color: white;
+}
+
+.asiento.reservado {
+  background: red !important;
+  color: white;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Botones de zoom */
+.controles-zoom {
+  display: flex;
+  gap: 10px;
+}
+
+.controles-zoom button {
+  padding: 10px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  background: #555;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.3s;
+}
+.controles-zoom button:hover {
+  background: #777;
+}
+.acciones {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+#reservar, #borrar {
+  padding: 10px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  background: #28a745;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}
+#reservar:hover, #borrar:hover {
+  background: #218838;
+}
