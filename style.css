@@ -43,7 +43,6 @@ h1 {
   flex: 1 1 140px;
   max-width: 200px;
 }
-
 #reservar { background: #28a745; color: #fff; }
 #borrar { background: #007bff; color: #fff; }
 #reset-all { background: #dc3545; color: #fff; }
@@ -67,44 +66,59 @@ h1 {
   transform-origin: top center;
   transition: transform 0.3s ease;
   padding: 10px;
+  width: 100%;
+  max-width: 900px;
 }
 
 .seccion {
-  margin-bottom: 40px;
+  background: #1c1c1c;
+  padding: 20px 15px;
+  margin: 25px auto;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.seccion h2 {
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  color: #fff;
+  border-bottom: 2px solid #333;
+  padding-bottom: 5px;
+  text-align: left;
 }
 
 .fila {
-  display: grid;
-  grid-gap: 4px;
+  display: flex;
   align-items: center;
-  margin-bottom: 6px;
+  justify-content: flex-start;
+  gap: 5px;
+  margin-bottom: 10px;
 }
 
 .etiqueta-fila {
-  grid-column: 1 / -1;
-  text-align: left;
+  width: 20px;
   font-weight: bold;
-  margin-bottom: 2px;
+  color: #ccc;
+  text-align: right;
+  margin-right: 8px;
 }
 
-/* Configuración de columnas según la cantidad */
-.fila[data-columnas="20"] {
-  grid-template-columns: repeat(20, 1fr);
-}
-.fila[data-columnas="30"] {
-  grid-template-columns: repeat(30, 1fr);
+.asientos-container {
+  display: flex;
+  gap: 5px;
+  flex-wrap: nowrap;
 }
 
-/* Asientos escalables */
 .asiento {
-  width: 100%;
-  aspect-ratio: 1 / 1;
+  width: 28px;
+  height: 28px;
+  font-size: 0.7rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: clamp(6px, 2vw, 12px);
-  border-radius: 3px;
+  border-radius: 4px;
   cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
 }
 
 .asiento.rosa { background: #ff44cd; }
@@ -114,12 +128,8 @@ h1 {
 .asiento.seleccionado { background: #4caf50 !important; }
 .asiento.reservado { background: #e53935 !important; cursor: not-allowed; }
 
-/* Responsivo móvil */
 @media (max-width: 600px) {
-  h1 { font-size: 1.5rem; }
-  .logo { width: 120px; }
-  #reservar, #borrar, #reset-all {
-    font-size: 0.9rem;
-    padding: 8px 12px;
-  }
+  .mapa { max-width: 100%; }
+  .asiento { width: 20px; height: 20px; font-size: 0.6rem; }
+  .etiqueta-fila { width: 16px; font-size: 0.7rem; }
 }

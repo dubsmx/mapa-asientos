@@ -27,12 +27,14 @@ document.addEventListener("DOMContentLoaded", () => {
     filas.forEach(fila => {
       const filaDiv = document.createElement("div");
       filaDiv.classList.add("fila");
-      filaDiv.dataset.columnas = columnas;
 
       const etiqueta = document.createElement("div");
       etiqueta.classList.add("etiqueta-fila");
       etiqueta.textContent = fila;
       filaDiv.appendChild(etiqueta);
+
+      const asientosContainer = document.createElement("div");
+      asientosContainer.classList.add("asientos-container");
 
       for (let col = 1; col <= columnas; col++) {
         const asiento = document.createElement("div");
@@ -46,8 +48,10 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         });
 
-        filaDiv.appendChild(asiento);
+        asientosContainer.appendChild(asiento);
       }
+
+      filaDiv.appendChild(asientosContainer);
       contenedor.appendChild(filaDiv);
     });
   }
