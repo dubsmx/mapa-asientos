@@ -1,172 +1,120 @@
 body {
   font-family: Arial, sans-serif;
-  background: #111;
-  color: white;
   margin: 0;
   padding: 0;
+  background: #121212;
+  color: #fff;
   text-align: center;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px 0;
+}
+
+.logo {
+  width: 140px;
+  max-width: 60%;
+  margin-bottom: 10px;
 }
 
 h1 {
-  margin: 20px 0;
+  margin: 10px 0;
+  font-size: 1.8rem;
 }
 
 .acciones {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  gap: 40px;
-  align-items: center;
-  margin-bottom: 10px;
+  gap: 12px;
+  padding: 10px;
 }
 
-#reservar {
-  padding: 10px 20px;
-  font-size: 18px;
+#reservar, #borrar, #reset-all {
+  padding: 10px 16px;
+  font-size: 1rem;
   font-weight: bold;
   border: none;
-  background: #28a745;
-  color: white;
   cursor: pointer;
   border-radius: 5px;
+  flex: 1 1 140px;
+  max-width: 200px;
 }
-#reservar:hover {
-  background: #218838;
+
+#reservar { background: #28a745; color: #fff; }
+#borrar { background: #007bff; color: #fff; }
+#reset-all { background: #dc3545; color: #fff; }
+#reservar:hover { background: #218838; }
+#borrar:hover { background: #0069d9; }
+#reset-all:hover { background: #c82333; }
+
+.controles-zoom {
+  display: flex;
+  gap: 8px;
 }
 
 .wrapper {
-  width: 100%;
-  height: 80vh;
-  overflow-y: auto;
-  overflow-x: hidden;
-  position: relative;
-  background: #222;
+  display: flex;
+  justify-content: center;
+  margin: 10px;
+  overflow-x: auto;
 }
 
 .mapa {
-  display: flex;
-  flex-direction: column;
-  gap: 60px;
-  align-items: center;
   transform-origin: top center;
+  transition: transform 0.3s ease;
+  padding: 10px;
 }
 
-/* Cada zona de asientos */
 .seccion {
-  background: #222;
-  padding: 20px;
-  border-radius: 8px;
-  text-align: center;
+  margin-bottom: 40px;
 }
 
-.seccion h2 {
-  margin-bottom: 20px;
-}
-
-/* Fila con etiqueta de letra */
 .fila {
   display: flex;
-  flex-direction: row;
   align-items: center;
-  justify-content: center;
+  margin-bottom: 4px;
+  flex-wrap: wrap;
 }
+
 .etiqueta-fila {
-  width: 30px;
+  width: 25px;
+  text-align: right;
+  margin-right: 6px;
   font-weight: bold;
-  color: white;
-  text-align: center;
-  margin-right: 5px;
 }
 
-/* Colores por zona */
-#zona-a .asiento {
-  background: pink;
-}
-#zona-a .asiento:hover {
-  background: hotpink;
-}
-
-#zona-b .asiento {
-  background: orange;
-}
-#zona-b .asiento:hover {
-  background: darkorange;
-}
-
-#zona-c .asiento {
-  background: yellow;
-}
-#zona-c .asiento:hover {
-  background: gold;
-}
-
+/* Asientos con tamaño dinámico */
 .asiento {
-  width: 30px;
-  height: 30px;
-  color: black;
-  font-size: 14px;
-  font-weight: bold;
-  text-align: center;
-  line-height: 30px;
-  border-radius: 8px;
-  margin: 3px;
+  margin: 1px;
   cursor: pointer;
-  transition: transform 0.2s, background 0.2s;
-}
-
-.asiento:hover {
-  transform: scale(1.2);
-}
-
-.asiento.seleccionado {
-  background: green !important;
-  color: white;
-}
-
-.asiento.reservado {
-  background: red !important;
-  color: white;
-  cursor: not-allowed;
-  pointer-events: none;
-}
-
-/* Botones de zoom */
-.controles-zoom {
-  display: flex;
-  gap: 10px;
-}
-
-.controles-zoom button {
-  padding: 10px 20px;
-  font-size: 18px;
-  font-weight: bold;
-  border: none;
-  background: #555;
-  color: white;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background 0.3s;
-}
-.controles-zoom button:hover {
-  background: #777;
-}
-.acciones {
   display: flex;
   justify-content: center;
-  gap: 40px;
   align-items: center;
-  margin-bottom: 10px;
+  border-radius: 3px;
+  font-size: clamp(8px, 1.5vw, 11px);
 }
 
-#reservar, #borrar {
-  padding: 10px 20px;
-  font-size: 18px;
-  font-weight: bold;
-  border: none;
-  background: #28a745;
-  color: white;
-  cursor: pointer;
-  border-radius: 5px;
-}
-#reservar:hover, #borrar:hover {
-  background: #218838;
+/* Colores + tamaños base */
+.asiento.rosa { width: 24px; height: 24px; background: #ff44cd; }
+.asiento.amarillo { width: 24px; height: 24px; background: #fff941; }
+.asiento.naranja { width: 16px; height: 16px; background: #ff8b26; font-size: clamp(6px, 1vw, 9px); }
+
+/* Estados seleccionados y reservados */
+.asiento.seleccionado { background: #4caf50 !important; }
+.asiento.reservado { background: #e53935 !important; cursor: not-allowed; }
+
+/* Responsivo */
+@media (max-width: 600px) {
+  h1 { font-size: 1.5rem; }
+  .logo { width: 120px; }
+  #reservar, #borrar, #reset-all {
+    font-size: 0.9rem;
+    padding: 8px 12px;
+  }
+  .asiento.rosa, .asiento.amarillo { width: 20px; height: 20px; }
+  .asiento.naranja { width: 14px; height: 14px; }
 }

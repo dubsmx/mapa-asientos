@@ -1,4 +1,6 @@
-// --- Inicializar Firebase ---
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getDatabase, ref, onValue, set, get, child, remove } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
 const firebaseConfig = {
   apiKey: "AIzaSyA19AJ-FK_5In9GHNSNZytSeiSOPMjkvSE",
   authDomain: "mapa-asientos.firebaseapp.com",
@@ -10,10 +12,8 @@ const firebaseConfig = {
   measurementId: "G-VGQX1X8GCE"
 };
 
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
-
-// ----------------------------
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
 document.addEventListener("DOMContentLoaded", () => {
   const filas = [
@@ -22,8 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "T","U","V","W","X"
   ];
 
-  // --- Crear secciones ---
-  function crearSeccion(contenedorId, columnas) {
+  function crearSeccion(contenedorId, columnas, claseColor) {
     const contenedor = document.getElementById(contenedorId);
 
     filas.forEach(fila => {
@@ -37,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       for (let col = 1; col <= columnas; col++) {
         const asiento = document.createElement("div");
-        asiento.classList.add("asiento");
+        asiento.classList.add("asiento", claseColor);
         asiento.dataset.nombre = `${contenedorId}-${fila}${col}`;
         asiento.textContent = col;
 
@@ -53,13 +52,13 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  crearSeccion("zona-a", 20);
-  crearSeccion("zona-b", 30);
-  crearSeccion("zona-c", 20);
+  crearSeccion("zona-a", 20, "rosa");
+  crearSeccion("zona-b", 30, "naranja");
+  crearSeccion("zona-c", 20, "amarillo");
 
-  // --- Escuchar asientos reservados en tiempo real ---
-  const reservadosRef = db.ref("reservados");
-  reservadosRef.on("value", (snapshot) => {
+  const reservadosRef = ref(db, "reservados");
+
+  onValue(reservadosRef, (snapshot) => {
     const reservados = snapshot.val() || [];
     document.querySelectorAll(".asiento").forEach(asiento => {
       if (reservados.includes(asiento.dataset.nombre)) {
@@ -71,47 +70,36 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // --- Botón Reservar ---
-  document.getElementById("reservar").addEventListener("click", () => {
+  document.getElementById("reservar").addEventListener("click", async () => {
     const seleccionados = [...document.querySelectorAll(".asiento.seleccionado")];
     const nuevosReservados = seleccionados.map(a => a.dataset.nombre);
 
-    reservadosRef.once("value", (snapshot) => {
-      const actuales = snapshot.val() || [];
-      const actualizados = [...new Set([...actuales, ...nuevosReservados])];
-      db.ref("reservados").set(actualizados);
-    });
+    const snapshot = await get(child(ref(db), "reservados"));
+    const actuales = snapshot.exists() ? snapshot.val() : [];
+    const actualizados = [...new Set([...actuales, ...nuevosReservados])];
+    await set(ref(db, "reservados"), actualizados);
 
     seleccionados.forEach(a => a.classList.remove("seleccionado"));
-    alert("Asientos reservados y guardados en la nube");
+    alert("Asientos reservados en la nube");
   });
 
-  // --- Botón Borrar selección ---
   document.getElementById("borrar").addEventListener("click", () => {
     document.querySelectorAll(".asiento.seleccionado").forEach(a => a.classList.remove("seleccionado"));
     alert("Selección borrada");
   });
 
-  // --- Zoom ---
+  document.getElementById("reset-all").addEventListener("click", async () => {
+    const confirmacion = confirm("¿Seguro que quieres borrar TODAS las reservas?");
+    if (confirmacion) {
+      await remove(ref(db, "reservados"));
+      alert("Todas las reservas fueron eliminadas");
+    }
+  });
+
   const mapa = document.getElementById("mapa");
   let scale = 1;
-
-  function updateTransform() {
-    mapa.style.transform = `scale(${scale})`;
-  }
-
-  document.getElementById("zoom-in").addEventListener("click", () => {
-    scale += 0.1;
-    updateTransform();
-  });
-
-  document.getElementById("zoom-out").addEventListener("click", () => {
-    scale = Math.max(0.5, scale - 0.1);
-    updateTransform();
-  });
-
-  document.getElementById("reset").addEventListener("click", () => {
-    scale = 1;
-    updateTransform();
-  });
+  function updateTransform() { mapa.style.transform = `scale(${scale})`; }
+  document.getElementById("zoom-in").addEventListener("click", () => { scale += 0.1; updateTransform(); });
+  document.getElementById("zoom-out").addEventListener("click", () => { scale = Math.max(0.5, scale - 0.1); updateTransform(); });
+  document.getElementById("reset").addEventListener("click", () => { scale = 1; updateTransform(); });
 });

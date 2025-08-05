@@ -7,11 +7,15 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>Mapa de Asientos</h1>
+  <header class="header">
+    <img src="https://i.imgur.com/JFiVIbn.png" alt="Logo" class="logo">
+    <h1>Mapa de Asientos</h1>
+  </header>
 
   <div class="acciones">
     <button id="reservar">Reservar</button>
     <button id="borrar">Borrar selección</button>
+    <button id="reset-all" class="danger">Deshacer todos los cambios</button>
     <div class="controles-zoom">
       <button id="zoom-in">+</button>
       <button id="zoom-out">-</button>
@@ -33,9 +37,6 @@
     </div>
   </div>
 
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"></script>
-  <script src="script.js" defer></script>
+  <script type="module" src="script.js"></script>
 </body>
 </html>
